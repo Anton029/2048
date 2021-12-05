@@ -121,6 +121,7 @@ function combineRow() {
 			let combinedTotal = parseInt(gridSquares[i].innerHTML) + parseInt(gridSquares[i + 1].innerHTML)
 			gridSquares[i].innerHTML = combinedTotal
 			gridSquares[i + 1].innerHTML = 0
+			// gridSquares[i + 1].style.color = '#EEE4DA'
 			score += combinedTotal
 			scoreDisplay.innerHTML = score
 	  	}
@@ -273,18 +274,54 @@ function clear() {
 //change colors
 function addColours() {
 	for (let i=0; i < gridSquares.length; i++) {
-		if (gridSquares[i].innerHTML      == 0) gridSquares[i].style.backgroundColor = '#afa192'
-		else if (gridSquares[i].innerHTML == 2) gridSquares[i].style.backgroundColor = '#eee4da'
-		else if (gridSquares[i].innerHTML == 4) gridSquares[i].style.backgroundColor = '#ede0c8' 
-		else if (gridSquares[i].innerHTML == 8) gridSquares[i].style.backgroundColor = '#f2b179' 
-		else if (gridSquares[i].innerHTML == 16) gridSquares[i].style.backgroundColor = '#ffcea4' 
-		else if (gridSquares[i].innerHTML == 32) gridSquares[i].style.backgroundColor = '#e8c064' 
-		else if (gridSquares[i].innerHTML == 64) gridSquares[i].style.backgroundColor = '#ffab6e' 
-		else if (gridSquares[i].innerHTML == 128) gridSquares[i].style.backgroundColor = '#fd9982' 
-		else if (gridSquares[i].innerHTML == 256) gridSquares[i].style.backgroundColor = '#ead79c' 
-		else if (gridSquares[i].innerHTML == 512) gridSquares[i].style.backgroundColor = '#76daff' 
-		else if (gridSquares[i].innerHTML == 1024) gridSquares[i].style.backgroundColor = '#beeaa5' 
-		else if (gridSquares[i].innerHTML == 2048) gridSquares[i].style.backgroundColor = '#d7d4f0' 
+		if (gridSquares[i].innerHTML      == 0) gridSquares[i].style.cssText = `
+																				background-color: #afa192;
+																				color: #afa192
+																				`
+		else if (gridSquares[i].innerHTML == 2) gridSquares[i].style.cssText = `
+																				background-color: #eee4da;
+																				color: #afa192
+																				`
+		else if (gridSquares[i].innerHTML == 4) gridSquares[i].style.cssText = `
+																				background-color: #ECE0C8;
+																				color: #afa192
+																				`
+		else if (gridSquares[i].innerHTML == 8) gridSquares[i].style.cssText = `
+																				background-color: #F2B179;
+																				color: #FFFFFF
+																				`
+		else if (gridSquares[i].innerHTML == 16) gridSquares[i].style.cssText = `
+																				background-color: #F59563;
+																				color: #FFFFFF
+																				`
+		else if (gridSquares[i].innerHTML == 32) gridSquares[i].style.cssText = `
+																				background-color: #F57C5F;
+																				color: #FFFFFF
+																				`
+		else if (gridSquares[i].innerHTML == 64) gridSquares[i].style.cssText = `
+																				background-color: #F65D3B;
+																				color: #FFFFFF
+																				` 
+		else if (gridSquares[i].innerHTML == 128) gridSquares[i].style.cssText = `
+																				background-color: #EFCA71;
+																				color: #FFFFFF
+																				` 
+		else if (gridSquares[i].innerHTML == 256) gridSquares[i].style.cssText = `
+																				background-color: #EEC85D;
+																				color: #FFFFFF
+																				`
+		else if (gridSquares[i].innerHTML == 512) gridSquares[i].style.cssText = `
+																				background-color: #F1C34B;
+																				color: #FFFFFF
+																				`
+		else if (gridSquares[i].innerHTML == 1024) gridSquares[i].style.cssText = `
+																				background-color: #F1BF38;
+																				color: #FFFFFF
+																				`
+		else if (gridSquares[i].innerHTML == 2048) gridSquares[i].style.cssText = `
+																				background-color: #DBB33B;
+																				color: #FFFFFF
+																				`
 	}
 }
 addColours()
@@ -292,6 +329,11 @@ addColours()
 let myTimer = setInterval(addColours, 50)
 
 restartGameButton.addEventListener('click', () => {
+
+	restartGameButton.classList.add('restart_button_clicked')
+	setTimeout(() => {
+		restartGameButton.classList.remove('restart_button_clicked')
+	}, 300)
 
 	resultDisplay.innerHTML = 'Играйте и доберитесь до <strong>2048</strong>'
 
@@ -306,6 +348,8 @@ restartGameButton.addEventListener('click', () => {
 
 	createBoard()
 	addColours()
+
+	myTimer = setInterval(addColours, 50)
 
 	document.addEventListener('keyup', control)
 	window.addEventListener('touchstart', touchStart)

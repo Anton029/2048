@@ -2,6 +2,7 @@
 	box-sizing: border-box;
 	padding: 0px;
 	margin: 0px;
+	user-select: none;
 }
 
 html, body {
@@ -36,7 +37,8 @@ h1 {
 	align-items: center;
 	flex-direction: column;
 	height: fit-content;
-	width: 600px;
+	width: 100%;
+	max-width: 600px;
 	margin-top: 30px;
 }
 
@@ -49,6 +51,7 @@ h1 {
 
 #result {
 	align-self: flex-start;
+	font-size: 20px;
 }
 
 .score_wrapper {
@@ -72,7 +75,13 @@ h1 {
 	background-color: #8f7a66;
 	color: #FFFFFF;
 	margin-right: 15px;
+	transition: 0.3s all;
+	transform: scale(1.0);
 	cursor: pointer;
+}
+
+.restart_button_clicked {
+	transform: scale(0.95);
 }
 
 .grid_wrapper {
@@ -121,7 +130,7 @@ h1 {
 	color: #afa192;
 	font-weight: bold;
 	text-align: center;
-	font-size: 35px;
+	font-size: 33px;
 	transition: 0.3s;
 }
 
@@ -145,4 +154,9 @@ h1 {
 
 .score-title {
 	font-size: 16px;
+}
+
+@media screen and (max-width: 568px) 
+{
+
 }
