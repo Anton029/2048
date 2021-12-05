@@ -5,7 +5,7 @@ const scoreDisplay = document.getElementById('score')
 const resultDisplay = document.getElementById('result')
 const looseGridToner = document.querySelector('.toner')
 const restartGameButton = document.querySelector('.restart_button')
-let squares = []
+let gridSquares = []
 const width = 4
 let score = 0
 
@@ -15,7 +15,7 @@ function createBoard() {
 		square = document.createElement('div')
 		square.innerHTML = 0
 		gridDisplay.appendChild(square)
-		squares.push(square)
+		gridSquares.push(square)
 	}
 	generate()
 	generate()
@@ -24,9 +24,9 @@ createBoard()
 
 //generate a new number
 function generate() {
-	randomNumber = Math.floor(Math.random() * squares.length)
-	if (squares[randomNumber].innerHTML == 0) {
-		squares[randomNumber].innerHTML = 2
+	randomNumber = Math.floor(Math.random() * gridSquares.length)
+	if (gridSquares[randomNumber].innerHTML == 0) {
+		gridSquares[randomNumber].innerHTML = 2
 		checkForGameOver()
 	} else generate()
 }
@@ -34,10 +34,10 @@ function generate() {
 function moveRight() {
 	for (let i = 0; i < 16; i++) {
 	  	if (i % 4 === 0) {
-			let totalOne = squares[i].innerHTML
-			let totalTwo = squares[i + 1].innerHTML
-			let totalThree = squares[i + 2].innerHTML
-			let totalFour = squares[i + 3].innerHTML
+			let totalOne = gridSquares[i].innerHTML
+			let totalTwo = gridSquares[i + 1].innerHTML
+			let totalThree = gridSquares[i + 2].innerHTML
+			let totalFour = gridSquares[i + 3].innerHTML
 			let row = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
 
 			let filteredRow = row.filter(num => num)
@@ -45,10 +45,10 @@ function moveRight() {
 			let zeros = Array(missing).fill(0)
 			let newRow = zeros.concat(filteredRow)
 
-			squares[i].innerHTML = newRow[0]
-			squares[i + 1].innerHTML = newRow[1]
-			squares[i + 2].innerHTML = newRow[2]
-			squares[i + 3].innerHTML = newRow[3]
+			gridSquares[i].innerHTML = newRow[0]
+			gridSquares[i + 1].innerHTML = newRow[1]
+			gridSquares[i + 2].innerHTML = newRow[2]
+			gridSquares[i + 3].innerHTML = newRow[3]
 	  	}
 	}
 }
@@ -56,10 +56,10 @@ function moveRight() {
 function moveLeft() {
 	for (let i=0; i < 16; i++) {
 		if (i % 4 === 0) {
-			let totalOne = squares[i].innerHTML
-			let totalTwo = squares[i+1].innerHTML
-			let totalThree = squares[i+2].innerHTML
-			let totalFour = squares[i+3].innerHTML
+			let totalOne = gridSquares[i].innerHTML
+			let totalTwo = gridSquares[i+1].innerHTML
+			let totalThree = gridSquares[i+2].innerHTML
+			let totalFour = gridSquares[i+3].innerHTML
 			let row = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
 
 			let filteredRow = row.filter(num => num)
@@ -67,20 +67,20 @@ function moveLeft() {
 			let zeros = Array(missing).fill(0)
 			let newRow = filteredRow.concat(zeros)
 
-			squares[i].innerHTML = newRow[0]
-			squares[i +	1].innerHTML = newRow[1]
-			squares[i +	2].innerHTML = newRow[2]
-			squares[i +	3].innerHTML = newRow[3]
+			gridSquares[i].innerHTML = newRow[0]
+			gridSquares[i +	1].innerHTML = newRow[1]
+			gridSquares[i +	2].innerHTML = newRow[2]
+			gridSquares[i +	3].innerHTML = newRow[3]
 	  	}
 	}
 }
 
 function moveUp() {
 	for (let i = 0; i < 4; i++) {
-		let totalOne = squares[i].innerHTML
-		let totalTwo = squares[i+width].innerHTML
-		let totalThree = squares[i + (width * 2)].innerHTML
-		let totalFour = squares[i + (width * 3)].innerHTML
+		let totalOne = gridSquares[i].innerHTML
+		let totalTwo = gridSquares[i+width].innerHTML
+		let totalThree = gridSquares[i + (width * 2)].innerHTML
+		let totalFour = gridSquares[i + (width * 3)].innerHTML
 		let column = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
 
 		let filteredColumn = column.filter(num => num)
@@ -88,19 +88,19 @@ function moveUp() {
 		let zeros = Array(missing).fill(0)
 		let newColumn = filteredColumn.concat(zeros)
 
-		squares[i].innerHTML = newColumn[0]
-		squares[i + width].innerHTML = newColumn[1]
-		squares[i + (width * 2)].innerHTML = newColumn[2]
-		squares[i + (width * 3)].innerHTML = newColumn[3]
+		gridSquares[i].innerHTML = newColumn[0]
+		gridSquares[i + width].innerHTML = newColumn[1]
+		gridSquares[i + (width * 2)].innerHTML = newColumn[2]
+		gridSquares[i + (width * 3)].innerHTML = newColumn[3]
 	}
 }
 
 function moveDown() {
 	for (let i = 0; i < 4; i++) {
-		let totalOne = squares[i].innerHTML
-		let totalTwo = squares[i + width].innerHTML
-		let totalThree = squares[i + (width * 2)].innerHTML
-		let totalFour = squares[i + (width * 3)].innerHTML
+		let totalOne = gridSquares[i].innerHTML
+		let totalTwo = gridSquares[i + width].innerHTML
+		let totalThree = gridSquares[i + (width * 2)].innerHTML
+		let totalFour = gridSquares[i + (width * 3)].innerHTML
 		let column = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
 
 		let filteredColumn = column.filter(num => num)
@@ -108,19 +108,19 @@ function moveDown() {
 		let zeros = Array(missing).fill(0)
 		let newColumn = zeros.concat(filteredColumn)
 
-		squares[i].innerHTML = newColumn[0]
-		squares[i + width].innerHTML = newColumn[1]
-		squares[i + (width * 2)].innerHTML = newColumn[2]
-		squares[i + (width * 3)].innerHTML = newColumn[3]
+		gridSquares[i].innerHTML = newColumn[0]
+		gridSquares[i + width].innerHTML = newColumn[1]
+		gridSquares[i + (width * 2)].innerHTML = newColumn[2]
+		gridSquares[i + (width * 3)].innerHTML = newColumn[3]
 	}
 }
 
 function combineRow() {
 	for (let i = 0; i < 15; i++) {
-		if (squares[i].innerHTML === squares[i + 1].innerHTML) {
-			let combinedTotal = parseInt(squares[i].innerHTML) + parseInt(squares[i + 1].innerHTML)
-			squares[i].innerHTML = combinedTotal
-			squares[i + 1].innerHTML = 0
+		if (gridSquares[i].innerHTML === gridSquares[i + 1].innerHTML) {
+			let combinedTotal = parseInt(gridSquares[i].innerHTML) + parseInt(gridSquares[i + 1].innerHTML)
+			gridSquares[i].innerHTML = combinedTotal
+			gridSquares[i + 1].innerHTML = 0
 			score += combinedTotal
 			scoreDisplay.innerHTML = score
 	  	}
@@ -130,10 +130,10 @@ function combineRow() {
 
 function combineColumn() {
 	for (let i = 0; i < 12; i++) {
-		if (squares[i].innerHTML === squares[i + width].innerHTML) {
-		let combinedTotal = parseInt(squares[i].innerHTML) + parseInt(squares[i + width].innerHTML)
-		squares[i].innerHTML = combinedTotal
-		squares[i  +width].innerHTML = 0
+		if (gridSquares[i].innerHTML === gridSquares[i + width].innerHTML) {
+		let combinedTotal = parseInt(gridSquares[i].innerHTML) + parseInt(gridSquares[i + width].innerHTML)
+		gridSquares[i].innerHTML = combinedTotal
+		gridSquares[i  +width].innerHTML = 0
 		score += combinedTotal
 		scoreDisplay.innerHTML = score
 	  }
@@ -160,8 +160,6 @@ let startTouchYPos
 let endTouchYPos
 let scrollXLength
 let scrollYLength
-let scrollXSide
-let scrollYSide
 
 //touch screen control
 function touchStart(event) {
@@ -179,35 +177,29 @@ function touchEnd(event) {
 	if(scrollXLength > 20 || scrollYLength > 10){
 		if(scrollXLength > scrollYLength){
 			if(endTouchXPos > startTouchXPos){
-				scrollXSide = 'вправо'
 				moveRight()
 				combineRow()
 				moveRight()
 				generate()
 			} else {
-				scrollXSide = 'влево'
 				moveLeft()
 				combineRow()
 				moveLeft()
 				generate()
 			}
-			console.log('Скролл по горизонтали ' + scrollXSide)
 		}
 		else if(scrollXLength < scrollYLength){
 			if(endTouchYPos > startTouchYPos){
-				scrollYSide = 'вниз'
 				moveDown()
 				combineColumn()
 				moveDown()
 				generate()
 			} else {
-				scrollYSide = 'вверх'
 				moveUp()
 				combineColumn()
 				moveUp()
 				generate()
 			}
-			console.log('Скролл по вертикали ' + scrollYSide)
 		}
 	}
 }
@@ -244,10 +236,10 @@ function keyDown() {
 	generate()
 }
 
-//check for the number 2048 in the squares to win
+//check for the number 2048 in the gridSquares to win
 function checkForWin() {
-	for (let i = 0; i < squares.length; i++) {
-		if (squares[i].innerHTML == 2048) {
+	for (let i = 0; i < gridSquares.length; i++) {
+		if (gridSquares[i].innerHTML == 2048) {
 		resultDisplay.innerHTML = 'Вы выиграли'
 		document.removeEventListener('keyup', control)
 		setTimeout(() => clear(), 3000)
@@ -258,8 +250,8 @@ function checkForWin() {
 //check if there are no zeros on the board to lose
 function checkForGameOver() {
 	let zeros = 0
-	for (let i = 0; i < squares.length; i++) {
-		if (squares[i].innerHTML == 0) {
+	for (let i = 0; i < gridSquares.length; i++) {
+		if (gridSquares[i].innerHTML == 0) {
 			zeros++
 		}
 	}
@@ -278,32 +270,46 @@ function clear() {
 	clearInterval(myTimer)
 }
 
-
 //change colors
 function addColours() {
-	for (let i=0; i < squares.length; i++) {
-		if (squares[i].innerHTML      == 0) squares[i].style.backgroundColor = '#afa192'
-		else if (squares[i].innerHTML == 2) squares[i].style.backgroundColor = '#eee4da'
-		else if (squares[i].innerHTML == 4) squares[i].style.backgroundColor = '#ede0c8' 
-		else if (squares[i].innerHTML == 8) squares[i].style.backgroundColor = '#f2b179' 
-		else if (squares[i].innerHTML == 16) squares[i].style.backgroundColor = '#ffcea4' 
-		else if (squares[i].innerHTML == 32) squares[i].style.backgroundColor = '#e8c064' 
-		else if (squares[i].innerHTML == 64) squares[i].style.backgroundColor = '#ffab6e' 
-		else if (squares[i].innerHTML == 128) squares[i].style.backgroundColor = '#fd9982' 
-		else if (squares[i].innerHTML == 256) squares[i].style.backgroundColor = '#ead79c' 
-		else if (squares[i].innerHTML == 512) squares[i].style.backgroundColor = '#76daff' 
-		else if (squares[i].innerHTML == 1024) squares[i].style.backgroundColor = '#beeaa5' 
-		else if (squares[i].innerHTML == 2048) squares[i].style.backgroundColor = '#d7d4f0' 
+	for (let i=0; i < gridSquares.length; i++) {
+		if (gridSquares[i].innerHTML      == 0) gridSquares[i].style.backgroundColor = '#afa192'
+		else if (gridSquares[i].innerHTML == 2) gridSquares[i].style.backgroundColor = '#eee4da'
+		else if (gridSquares[i].innerHTML == 4) gridSquares[i].style.backgroundColor = '#ede0c8' 
+		else if (gridSquares[i].innerHTML == 8) gridSquares[i].style.backgroundColor = '#f2b179' 
+		else if (gridSquares[i].innerHTML == 16) gridSquares[i].style.backgroundColor = '#ffcea4' 
+		else if (gridSquares[i].innerHTML == 32) gridSquares[i].style.backgroundColor = '#e8c064' 
+		else if (gridSquares[i].innerHTML == 64) gridSquares[i].style.backgroundColor = '#ffab6e' 
+		else if (gridSquares[i].innerHTML == 128) gridSquares[i].style.backgroundColor = '#fd9982' 
+		else if (gridSquares[i].innerHTML == 256) gridSquares[i].style.backgroundColor = '#ead79c' 
+		else if (gridSquares[i].innerHTML == 512) gridSquares[i].style.backgroundColor = '#76daff' 
+		else if (gridSquares[i].innerHTML == 1024) gridSquares[i].style.backgroundColor = '#beeaa5' 
+		else if (gridSquares[i].innerHTML == 2048) gridSquares[i].style.backgroundColor = '#d7d4f0' 
 	}
 }
 addColours()
 
 let myTimer = setInterval(addColours, 50)
 
-console.log('Test')
-
 restartGameButton.addEventListener('click', () => {
-	window.location.reload()
+
+	resultDisplay.innerHTML = 'Играйте и доберитесь до <strong>2048</strong>'
+
+	score = 0
+	gridSquares = []
+
+	scoreDisplay.innerHTML = score
+	
+	looseGridToner.classList.remove('active_toner')
+
+	gridDisplay.innerHTML = ''
+
+	createBoard()
+	addColours()
+
+	document.addEventListener('keyup', control)
+	window.addEventListener('touchstart', touchStart)
+	window.addEventListener('touchend', touchEnd)
 })
 
 })
