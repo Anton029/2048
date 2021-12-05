@@ -250,7 +250,7 @@ function checkForWin() {
 		if (squares[i].innerHTML == 2048) {
 		resultDisplay.innerHTML = 'Вы выиграли'
 		document.removeEventListener('keyup', control)
-		// setTimeout(() => clear(), 3000)
+		setTimeout(() => clear(), 3000)
 		}
 	}
 }
@@ -268,7 +268,7 @@ function checkForGameOver() {
 		document.removeEventListener('keyup', control)
 		window.removeEventListener('touchstart', touchStart)
 		window.removeEventListener('touchend', touchEnd)
-		// setTimeout(() => clear(), 3000)
+		setTimeout(() => clear(), 3000)
 		looseGridToner.classList.add('active_toner')
 	}
 }
@@ -303,24 +303,6 @@ let myTimer = setInterval(addColours, 50)
 console.log('Test')
 
 restartGameButton.addEventListener('click', () => {
-
-	// gridDisplay.innerHTML = ''
-	// resultDisplay.innerHTML = 'Играйте и доберитесь до <strong>2048</strong>'
-
-	// score = 0
-	// scoreDisplay.innerHTML = score	
-	// looseGridToner.classList.remove('active_toner')
-
-	// generate()
-	// generate()
-	
-	// createBoard()
-
-	// document.addEventListener('keyup', control)
-	// window.addEventListener('touchstart', touchStart)
-	// window.addEventListener('touchend', touchEnd)
-
-	// myTimer = setInterval(addColours, 50)
 	window.location.reload()
 })
 
