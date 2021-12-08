@@ -5,6 +5,9 @@ const scoreDisplay = document.getElementById('score')
 const resultDisplay = document.getElementById('result')
 const looseGridToner = document.querySelector('.toner')
 const restartGameButton = document.querySelector('.restart_button')
+const ratingButton = document.querySelector('.rating_button')
+const ratingIcon = document.querySelector('.rating_icon')
+const ratingList = document.querySelector('.rating_list')
 let gridSquares = []
 const width = 4
 let score = 0
@@ -121,7 +124,6 @@ function combineRow() {
 			let combinedTotal = parseInt(gridSquares[i].innerHTML) + parseInt(gridSquares[i + 1].innerHTML)
 			gridSquares[i].innerHTML = combinedTotal
 			gridSquares[i + 1].innerHTML = 0
-			// gridSquares[i + 1].style.color = '#EEE4DA'
 			score += combinedTotal
 			scoreDisplay.innerHTML = score
 	  	}
@@ -163,13 +165,13 @@ let scrollXLength
 let scrollYLength
 
 //touch screen control
+window.addEventListener('touchstart', touchStart)
 function touchStart(event) {
 	startTouchXPos = event.changedTouches[0].screenX
 	startTouchYPos = event.changedTouches[0].screenY
 }
 
-window.addEventListener('touchstart', touchStart)
-
+window.addEventListener('touchend', touchEnd)
 function touchEnd(event) {
 	endTouchXPos = event.changedTouches[0].screenX
 	endTouchYPos = event.changedTouches[0].screenY
@@ -205,7 +207,49 @@ function touchEnd(event) {
 	}
 }
 
-window.addEventListener('touchend', touchEnd)
+
+//terminal
+document.addEventListener('mousedown', clickStart)
+function clickStart(event) {
+	startTouchXPos = event.clientX
+	startTouchYPos = event.clientY
+}
+
+document.addEventListener('mouseup', clickEnd)
+function clickEnd(event) {
+	endTouchXPos = event.clientX
+	endTouchYPos = event.clientY
+	scrollXLength = Math.abs(startTouchXPos - endTouchXPos)
+	scrollYLength = Math.abs(startTouchYPos - endTouchYPos)
+	if(scrollXLength > 20 || scrollYLength > 10){
+		if(scrollXLength > scrollYLength){
+			if(endTouchXPos > startTouchXPos){
+				moveRight()
+				combineRow()
+				moveRight()
+				generate()
+			} else {
+				moveLeft()
+				combineRow()
+				moveLeft()
+				generate()
+			}
+		}
+		else if(scrollXLength < scrollYLength){
+			if(endTouchYPos > startTouchYPos){
+				moveDown()
+				combineColumn()
+				moveDown()
+				generate()
+			} else {
+				moveUp()
+				combineColumn()
+				moveUp()
+				generate()
+			}
+		}
+	}
+}
 
 document.addEventListener('keyup', control)
 
@@ -237,16 +281,18 @@ function keyDown() {
 	generate()
 }
 
-//check for the number 2048 in the gridSquares to win
+// check for the number 2048 in the gridSquares to win
 function checkForWin() {
-	for (let i = 0; i < gridSquares.length; i++) {
-		if (gridSquares[i].innerHTML == 2048) {
-		resultDisplay.innerHTML = 'Вы выиграли'
-		document.removeEventListener('keyup', control)
-		setTimeout(() => clear(), 3000)
+	if(resultDisplay.innerHTML != 'Вы добрались до <strong>2048</strong>'){
+		for (let i = 0; i < gridSquares.length; i++) {
+			if (gridSquares[i].innerHTML == 2048) {
+				resultDisplay.innerHTML = 'Вы добрались до <strong>2048</strong>'
+			}
 		}
 	}
 }
+
+let globalGameLock = false
 
 //check if there are no zeros on the board to lose
 function checkForGameOver() {
@@ -261,8 +307,14 @@ function checkForGameOver() {
 		document.removeEventListener('keyup', control)
 		window.removeEventListener('touchstart', touchStart)
 		window.removeEventListener('touchend', touchEnd)
+		document.removeEventListener('mousedown', clickStart)
+		document.removeEventListener('mouseup', clickEnd)
 		setTimeout(() => clear(), 3000)
 		looseGridToner.classList.add('active_toner')
+		setTimeout(() => {
+			losePopup.classList.add('floatup_popup')
+			globalGameLock = true
+		}, 150)
 	}
 }
 
@@ -274,60 +326,145 @@ function clear() {
 //change colors
 function addColours() {
 	for (let i=0; i < gridSquares.length; i++) {
-		if (gridSquares[i].innerHTML      == 0) gridSquares[i].style.cssText = `
-																				background-color: #afa192;
-																				color: #afa192
-																				`
-		else if (gridSquares[i].innerHTML == 2) gridSquares[i].style.cssText = `
-																				background-color: #eee4da;
-																				color: #afa192
-																				`
-		else if (gridSquares[i].innerHTML == 4) gridSquares[i].style.cssText = `
-																				background-color: #ECE0C8;
-																				color: #afa192
-																				`
-		else if (gridSquares[i].innerHTML == 8) gridSquares[i].style.cssText = `
-																				background-color: #F2B179;
-																				color: #FFFFFF
-																				`
-		else if (gridSquares[i].innerHTML == 16) gridSquares[i].style.cssText = `
-																				background-color: #F59563;
-																				color: #FFFFFF
-																				`
-		else if (gridSquares[i].innerHTML == 32) gridSquares[i].style.cssText = `
-																				background-color: #F57C5F;
-																				color: #FFFFFF
-																				`
-		else if (gridSquares[i].innerHTML == 64) gridSquares[i].style.cssText = `
-																				background-color: #F65D3B;
-																				color: #FFFFFF
-																				` 
-		else if (gridSquares[i].innerHTML == 128) gridSquares[i].style.cssText = `
-																				background-color: #EFCA71;
-																				color: #FFFFFF
-																				` 
-		else if (gridSquares[i].innerHTML == 256) gridSquares[i].style.cssText = `
-																				background-color: #EEC85D;
-																				color: #FFFFFF
-																				`
-		else if (gridSquares[i].innerHTML == 512) gridSquares[i].style.cssText = `
-																				background-color: #F1C34B;
-																				color: #FFFFFF
-																				`
-		else if (gridSquares[i].innerHTML == 1024) gridSquares[i].style.cssText = `
-																				background-color: #F1BF38;
-																				color: #FFFFFF
-																				`
-		else if (gridSquares[i].innerHTML == 2048) gridSquares[i].style.cssText = `
-																				background-color: #DBB33B;
-																				color: #FFFFFF
-																				`
+		if (gridSquares[i].innerHTML      == 0) gridSquares[i].style.cssText = 		`
+																					background-color: #afa192;
+																					color: #afa192
+																					`
+		else if (gridSquares[i].innerHTML == 2) gridSquares[i].style.cssText = 		`
+																					background-color: #eee4da;
+																					color: #afa192
+																					`
+		else if (gridSquares[i].innerHTML == 4) gridSquares[i].style.cssText = 		`
+																					background-color: #ECE0C8;
+																					color: #afa192
+																					`
+		else if (gridSquares[i].innerHTML == 8) gridSquares[i].style.cssText = 		`
+																					background-color: #F2B179;
+																					color: #FFFFFF
+																					`
+		else if (gridSquares[i].innerHTML == 16) gridSquares[i].style.cssText = 	`
+																					background-color: #F59563;
+																					color: #FFFFFF
+																					`
+		else if (gridSquares[i].innerHTML == 32) gridSquares[i].style.cssText = 	`
+																					background-color: #F57C5F;
+																					color: #FFFFFF
+																					`
+		else if (gridSquares[i].innerHTML == 64) gridSquares[i].style.cssText = 	`
+																					background-color: #F65D3B;
+																					color: #FFFFFF
+																					` 
+		else if (gridSquares[i].innerHTML == 128) gridSquares[i].style.cssText = 	`
+																					background-color: #EFCA71;
+																					color: #FFFFFF
+																					` 
+		else if (gridSquares[i].innerHTML == 256) gridSquares[i].style.cssText = 	`
+																					background-color: #EEC85D;
+																					color: #FFFFFF
+																					`
+		else if (gridSquares[i].innerHTML == 512) gridSquares[i].style.cssText = 	`
+																					background-color: #F1C34B;
+																					color: #FFFFFF
+																					`
+		else if (gridSquares[i].innerHTML == 1024) gridSquares[i].style.cssText = 	`
+																					background-color: #F1BF38;
+																					color: #FFFFFF
+																					`
+		else if (gridSquares[i].innerHTML >= 2048) gridSquares[i].style.cssText = 	`
+																					background-color: #DBB33B;
+																					color: #FFFFFF
+																					`
 	}
 }
 addColours()
 
 let myTimer = setInterval(addColours, 50)
 
+ratingButton.addEventListener('click', () => {
+	setTimeout(() => {
+		if(ratingIcon.classList.contains('rating_icon_active')
+			&& ratingList.classList.contains('rating_list_active')
+		){
+			ratingIcon.classList.remove('rating_icon_active')
+			ratingList.classList.remove('rating_list_active')
+		} else {
+			ratingIcon.classList.add('rating_icon_active')
+			ratingList.classList.add('rating_list_active')
+		}
+	}, 150)
+})
+
+ratingList.addEventListener('touchstart', () => {
+	window.removeEventListener('touchstart', touchStart)
+	window.removeEventListener('touchend', touchEnd)
+	document.removeEventListener('mousedown', clickStart)
+	document.removeEventListener('mouseup', clickEnd)
+	document.removeEventListener('touchstart', windowScroll)
+})
+
+ratingList.addEventListener('touchend', () => {
+	document.addEventListener('touchstart', windowScroll)
+})
+
+let sortLocalStorage = []
+
+function updateLocalStorage() {
+	sortLocalStorage = []
+	for(key in localStorage) {
+		if(
+			key != 'length' && 
+			key != 'clear' && 
+			key != 'getItem' && 
+			key != 'key' && 
+			key != 'removeItem' && 
+			key != 'setItem'
+		){
+			sortLocalStorage.push([key, localStorage[key]])
+			sortLocalStorage.sort((a, b) => b[1] - a[1])
+		}
+	}
+}
+
+updateLocalStorage()
+
+function createRatingList(dataArray){
+	if(sortLocalStorage.length == 0){
+		ratingList.innerHTML = '<div class="empty_list_text">Пока что рейтинг пустой</div>'
+		return true
+	} else ratingList.innerHTML = ''
+	
+	let leadersCounter = 0
+	dataArray.forEach(el => {
+		++leadersCounter
+
+		const listItemWrapper = document.createElement('div')
+		listItemWrapper.className = 'list_item'
+
+		const itemTltle = document.createElement('div')
+		itemTltle.className = 'item_tltle'
+		itemTltle.innerHTML = `<span class="rating_position">${leadersCounter}. ${el[0]}</span>`
+		listItemWrapper.append(itemTltle)
+		
+		const itemScore = document.createElement('div')
+		itemScore.className = 'item_score'
+		itemScore.innerHTML = `${el[1]}`
+		listItemWrapper.append(itemScore)
+
+		ratingList.append(listItemWrapper)
+	})
+}
+
+createRatingList(sortLocalStorage)
+
+//unlock game controls
+function windowScroll() {
+	window.addEventListener('touchstart', touchStart)
+	window.addEventListener('touchend', touchEnd)
+	document.addEventListener('mousedown', clickStart)
+	document.addEventListener('mouseup', clickEnd)
+}
+
+//restart game
 restartGameButton.addEventListener('click', () => {
 
 	restartGameButton.classList.add('restart_button_clicked')
@@ -335,15 +472,19 @@ restartGameButton.addEventListener('click', () => {
 		restartGameButton.classList.remove('restart_button_clicked')
 	}, 300)
 
+	setTimeout(() => {
+		losePopup.classList.remove('floatup_popup')
+	}, 150)
+	
+
 	resultDisplay.innerHTML = 'Играйте и доберитесь до <strong>2048</strong>'
 
 	score = 0
 	gridSquares = []
 
 	scoreDisplay.innerHTML = score
-	
 	looseGridToner.classList.remove('active_toner')
-
+	globalGameLock = false
 	gridDisplay.innerHTML = ''
 
 	createBoard()
@@ -354,6 +495,141 @@ restartGameButton.addEventListener('click', () => {
 	document.addEventListener('keyup', control)
 	window.addEventListener('touchstart', touchStart)
 	window.addEventListener('touchend', touchEnd)
+	document.addEventListener('mousedown', clickStart)
+	document.addEventListener('mouseup', clickEnd)
+})
+
+let losePopup = document.querySelector('.lose_popup_message')
+const cancelRecordSave = document.querySelector('.lose_popup_message .cancel_button')
+const confirmRecordSave = document.querySelector('.lose_popup_message .save_button')
+let nicknamePopup = document.querySelector('.nickname_input_wrapper')
+let virtualKeyBoard = document.querySelector('.virtual_keyboard')
+const enterToRecord = document.querySelector('.nickname_input_wrapper .enter')
+
+nicknamePopup.addEventListener('mousedown', () => {
+	console.log('start');
+	window.removeEventListener('touchstart', touchStart)
+	window.removeEventListener('touchend', touchEnd)
+	document.removeEventListener('mousedown', clickStart)
+	document.removeEventListener('mouseup', clickEnd)
+	document.removeEventListener('touchstart', windowScroll)
+})
+
+nicknamePopup.addEventListener('mouseup', () => {
+	if(!globalGameLock){
+		document.addEventListener('touchstart', windowScroll)
+	}
+})
+
+nicknamePopup.addEventListener('touchstart', () => {
+	window.removeEventListener('touchstart', touchStart)
+	window.removeEventListener('touchend', touchEnd)
+	document.removeEventListener('mousedown', clickStart)
+	document.removeEventListener('mouseup', clickEnd)
+	document.removeEventListener('touchstart', windowScroll)
+})
+
+nicknamePopup.addEventListener('touchend', () => {
+	if(!globalGameLock){
+		document.addEventListener('touchstart', windowScroll)
+	}
+})
+
+
+
+virtualKeyBoard.addEventListener('mousedown', () => {
+	console.log('start');
+	window.removeEventListener('touchstart', touchStart)
+	window.removeEventListener('touchend', touchEnd)
+	document.removeEventListener('mousedown', clickStart)
+	document.removeEventListener('mouseup', clickEnd)
+	document.removeEventListener('touchstart', windowScroll)
+})
+
+virtualKeyBoard.addEventListener('mouseup', () => {
+	if(!globalGameLock){
+		document.addEventListener('touchstart', windowScroll)
+	}
+})
+
+virtualKeyBoard.addEventListener('touchstart', () => {
+	window.removeEventListener('touchstart', touchStart)
+	window.removeEventListener('touchend', touchEnd)
+	document.removeEventListener('mousedown', clickStart)
+	document.removeEventListener('mouseup', clickEnd)
+	document.removeEventListener('touchstart', windowScroll)
+})
+
+virtualKeyBoard.addEventListener('touchend', () => {
+	if(!globalGameLock){
+		document.addEventListener('touchstart', windowScroll)
+	}
+})
+
+confirmRecordSave.addEventListener('click', () => {
+	setTimeout(() => {
+		losePopup.classList.remove('floatup_popup')
+		nicknamePopup.classList.add('floatup_popup')
+		virtualKeyBoard.classList.add('floatup_popup')
+	}, 150)
+})
+
+cancelRecordSave.addEventListener('click', () => {
+	setTimeout(() => {
+		losePopup.classList.remove('floatup_popup')
+	}, 150)
+})
+
+let buttonLock = false
+
+localStorage.clear()
+localStorage.setItem('robot_1', '11422')
+localStorage.setItem('robot_2', '242')
+localStorage.setItem('robot_3', '2415')
+localStorage.setItem('robot_4', '7522')
+localStorage.setItem('robot_5', '1234')
+localStorage.setItem('robot_6', '23')
+localStorage.setItem('robot_7', '634')
+
+enterToRecord.addEventListener('click', () => {
+	if(buttonLock === false){
+		buttonLock = true
+		setTimeout(() => {
+			nicknamePopup.classList.remove('floatup_popup')
+			virtualKeyBoard.classList.remove('floatup_popup')
+			const nickname = nicknamePopup.querySelector('input').value
+			
+			const checkStorageRating = localStorage.getItem(`${nickname}`)
+
+			if(checkStorageRating){
+				if(Number(score) > Number(checkStorageRating)){
+					localStorage.setItem(`${nickname}`, `${score}`)
+					updateLocalStorage()
+					createRatingList(sortLocalStorage)
+				}
+
+			} else {
+				localStorage.setItem(`${nickname}`, `${score}`)
+				updateLocalStorage()
+				createRatingList(sortLocalStorage)
+			}
+	
+			setTimeout(() => {
+				nicknamePopup.querySelector('input').value = ''
+	
+				window.addEventListener('touchstart', touchStart)
+				window.addEventListener('touchend', touchEnd)
+				document.addEventListener('mousedown', clickStart)
+				document.addEventListener('mouseup', clickEnd)
+				document.addEventListener('touchstart', windowScroll)
+			}, 150)
+
+		}, 150)
+
+		setTimeout(() => {
+			buttonLock = false
+		}, 500)
+	}
 })
 
 })

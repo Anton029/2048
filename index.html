@@ -8,15 +8,39 @@
 </head>
 <body>
 	<div class="container_wrapper">
+		<div class="lose_popup_message">
+			<div class="popup_title">Вы проиграли, желаете сохранить свой рекорд в общем рейтинге игроков?</div>
+			<div class="buttons_wrapper">
+				<div class="save_button">Да</div>
+				<div class="cancel_button">Нет</div>
+			</div>
+		</div>
+		<div class="win_popup_message"></div>
+		<div class="new_record_popup_message"></div>
+		<div class="nickname_input_wrapper">
+			<input type="text">
+			<div class="enter"></div>
+		</div>
+		<div class="virtual_keyboard">
+			Тут должна быть клава ;-)
+		</div>
+
+		<div class="rating_select">
+			<div class="rating_button">
+				<div class="button_title">Рейтинг игроков</div>
+				<div class="rating_icon"></div>
+			</div>
+			<div class="rating_list"></div>
+		</div>
 		<div class="container">
 			<div class="info">
 				<h1>2048</h1>
 				<div class="score_wrapper">
-					<div class="restart_button">Начать заново</div>
 					<div class="score_container">
 						<div class="score-title">Счёт</div>
 						<span id="score">0</span>
 					</div>
+					<div class="restart_button">Начать заново</div>
 				</div>
 			</div>
 			<span id="result">
