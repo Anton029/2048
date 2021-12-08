@@ -239,12 +239,12 @@ h1 {
 	flex-direction: column;
 	width: 100%;
 	height: fit-content;
+	top: 20px;
 	min-height: 49px;
 	max-height: 498px;
 	overflow-y: auto;
 	background-color: #dad1c8;
 	border-radius: 10px;
-	top: 20px;
 	transform: scaleX(0.99) scaleY(0);
 	transform-origin: center top;
 	transition: 0.3s all;
@@ -280,7 +280,7 @@ h1 {
 	text-transform: uppercase;
 	color: rgb(143, 129, 115);
 	white-space: nowrap;
-	
+	font-size: 15px;
 	font-weight: 600;
 }
 
