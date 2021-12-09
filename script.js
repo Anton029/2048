@@ -427,7 +427,7 @@ function updateLocalStorage() {
 
 updateLocalStorage()
 
-function createRatingList(dataArray){
+function buildRatingList(dataArray){
 	if(sortLocalStorage.length == 0){
 		ratingList.innerHTML = '<div class="empty_list_text">Пока что рейтинг пустой</div>'
 		return true
@@ -454,7 +454,7 @@ function createRatingList(dataArray){
 	})
 }
 
-createRatingList(sortLocalStorage)
+buildRatingList(sortLocalStorage)
 
 //unlock game controls
 function windowScroll() {
@@ -582,8 +582,6 @@ cancelRecordSave.addEventListener('click', () => {
 
 let buttonLock = false
 
-localStorage.clear()
-
 enterToRecord.addEventListener('click', () => {
 	if(buttonLock === false){
 		buttonLock = true
@@ -598,13 +596,13 @@ enterToRecord.addEventListener('click', () => {
 				if(Number(score) > Number(checkStorageRating)){
 					localStorage.setItem(`${nickname}`, `${score}`)
 					updateLocalStorage()
-					createRatingList(sortLocalStorage)
+					buildRatingList(sortLocalStorage)
 				}
 
 			} else {
 				localStorage.setItem(`${nickname}`, `${score}`)
 				updateLocalStorage()
-				createRatingList(sortLocalStorage)
+				buildRatingList(sortLocalStorage)
 			}
 	
 			setTimeout(() => {
