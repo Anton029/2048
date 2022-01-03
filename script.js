@@ -499,15 +499,14 @@ restartGameButton.addEventListener('click', () => {
 	document.addEventListener('mouseup', clickEnd)
 })
 
-let losePopup = document.querySelector('.lose_popup_message')
+const losePopup = document.querySelector('.lose_popup_message')
 const cancelRecordSave = document.querySelector('.lose_popup_message .cancel_button')
 const confirmRecordSave = document.querySelector('.lose_popup_message .save_button')
-let nicknamePopup = document.querySelector('.nickname_input_wrapper')
-let virtualKeyBoard = document.querySelector('.virtual_keyboard')
+const nicknamePopup = document.querySelector('.nickname_input_wrapper')
+const virtualKeyBoard = document.querySelector('.virtual_keyboard')
 const enterToRecord = document.querySelectorAll('.nickname_input_wrapper .enter, .virtual_keyboard .enter_button')
 
 nicknamePopup.addEventListener('mousedown', () => {
-	console.log('start');
 	window.removeEventListener('touchstart', touchStart)
 	window.removeEventListener('touchend', touchEnd)
 	document.removeEventListener('mousedown', clickStart)
@@ -538,7 +537,6 @@ nicknamePopup.addEventListener('touchend', () => {
 
 
 virtualKeyBoard.addEventListener('mousedown', () => {
-	console.log('start');
 	window.removeEventListener('touchstart', touchStart)
 	window.removeEventListener('touchend', touchEnd)
 	document.removeEventListener('mousedown', clickStart)
@@ -566,11 +564,14 @@ virtualKeyBoard.addEventListener('touchend', () => {
 	}
 })
 
+const nicknameInput = document.getElementById('nickname_input')
+
 confirmRecordSave.addEventListener('click', () => {
 	setTimeout(() => {
 		losePopup.classList.remove('floatup_popup')
 		nicknamePopup.classList.add('floatup_popup')
 		virtualKeyBoard.classList.add('floatup_popup')
+		nicknameInput.focus()
 	}, 150)
 })
 
@@ -584,7 +585,6 @@ let buttonLock = false
 
 enterToRecord.forEach(e => 
 	e.addEventListener('click', () => {
-		console.log('sd');
 		if(buttonLock === false){
 			buttonLock = true
 			setTimeout(() => {
@@ -622,6 +622,8 @@ enterToRecord.forEach(e =>
 			setTimeout(() => {
 				buttonLock = false
 			}, 500)
+
+			nicknameInput.blur()
 		}
 	})
 )

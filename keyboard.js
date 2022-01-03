@@ -109,8 +109,6 @@ keyboardNameInputButtons.forEach(e => {
     })
 })
 
-//        keyboardNameInput.value += e.innerHTML
-
 deleteButton.addEventListener('click', () => {
     keyboardNameInput.value = keyboardNameInput.value.slice(0, -1)
 })
@@ -152,11 +150,11 @@ changeKeyboardLangButton.addEventListener('click', () => {
             e.classList.add('keyboard_buttons_clicked')
             setTimeout(() => {
                 e.classList.remove('keyboard_buttons_clicked')
-            }, 200)
+            }, 150)
         })
     })
 
-    keyboardNameInputButtons = document.querySelectorAll('.numbers_row .number_button, .letters_row_wrapper .letter, .other_keys_row .space_button')
+    keyboardNameInputButtons = document.querySelectorAll('.letters_row_wrapper .letter')
     keyboardNameInputButtons.forEach(e => {
         e.addEventListener('click', () => {
             keyboardNameInput.value += e.innerHTML
