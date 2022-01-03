@@ -18,11 +18,34 @@
 		<div class="win_popup_message"></div>
 		<div class="new_record_popup_message"></div>
 		<div class="nickname_input_wrapper">
-			<input type="text">
+			<input id="nickname_input" type="text" placeholder="Введите ваш ник">
 			<div class="enter"></div>
 		</div>
 		<div class="virtual_keyboard">
-			Тут должна быть клава ;-)
+			<div class="numbers_row">
+				<div class="number_button">1</div>
+				<div class="number_button">2</div>
+				<div class="number_button">3</div>
+				<div class="number_button">4</div>
+				<div class="number_button">5</div>
+				<div class="number_button">6</div>
+				<div class="number_button">7</div>
+				<div class="number_button">8</div>
+				<div class="number_button">9</div>
+				<div class="number_button">0</div>
+				<div class="number_button">-</div>
+				<div class="number_button">_</div>
+			</div>
+			<div class="letters_row_wrapper">
+				<!--JS generating keyboard letters-->
+			</div>
+			<div class="other_keys_row">
+				<div class="capsLk_button">CapsLk</div>
+				<div class="change_language_button"></div>
+				<div class="space_button"> </div>
+				<div class="enter_button">Enter</div>
+				<div class="delete_button">&larr;</div>
+			</div>
 		</div>
 
 		<div class="rating_select">
@@ -53,5 +76,6 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="./script.js"></script>
+	<script type="text/javascript" src="./keyboard.js"></script>
 </body>
 </html>

@@ -118,15 +118,18 @@ h1 {
 .virtual_keyboard {
 	display: flex;
 	position: absolute;
-	justify-content: center;
-	align-items: center;
+	flex-direction: column;
+	justify-content: space-between;
 	width: 650px;
 	height: 300px;
+	height: fit-content;
 	background-color: #dad1c8;
+	color: rgb(143, 129, 115);
 	box-shadow: 0px 0px 10px #8f7a66;
 	border-radius: 10px;
 	bottom: 20px;
 	margin: 0 auto;
+	padding: 15px;
 	transform: translateY(calc(100% + 40px));
 	transition: 0.3s all;
 	z-index: 2;
@@ -134,6 +137,108 @@ h1 {
 
 .floatup_popup {
 	transform: translateY(0%);
+}
+
+.numbers_row {
+	display: flex;
+	position: relative;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+}
+
+.number_button {
+	min-width: 42px;
+	min-height: 42px;
+	margin-right: 10px;
+}
+.number_button:last-child {
+	margin-right: 0px;
+}
+
+.other_keys_row {
+	display: flex;
+	position: relative;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.other_keys_row
+.space_button {
+	min-width: 300px;
+	white-space: pre-wrap;
+}
+
+.other_keys_row .change_language_button {
+	position: absolute;
+	min-width: 42px;
+	top: calc(-100% - 10px);
+	background-image: url(./icons/language.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 45%;
+}
+
+.numbers_row div,
+.letters_row_wrapper .letter,
+.other_keys_row div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #dad1c8;
+	box-shadow: 0px 0px 10px #8f7a66;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: 0.2s all ease;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.virtual_keyboard .keyboard_buttons_clicked,
+.letters_row_wrapper .letter .keyboard_buttons_clicked
+{
+	background-color: #8f7a66;
+	color: #FFFFFF;
+}
+
+.letters_row_wrapper {
+	margin-bottom: 10px;
+}
+
+.letters_row {
+	display: flex;
+	position: relative;
+	flex-direction: row;
+	width: 100%;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+
+.letters_row:last-child {
+	margin-bottom: 0px;
+}
+
+.letters_row .letter {
+	min-height: 40px;
+	min-width: 40px;
+	margin-right: 10px;
+}
+.letters_row .letter:last-child {
+	margin-right: 0px;
+}
+
+.other_keys_row div {
+	min-height: 42px;
+	min-width: 94px;
+	transition: 0.2s all;
+}
+
+.other_keys_row .delete_button {
+	position: absolute;
+	top: calc(-100% - 10px);
+	right: 0px;
+	min-width: 42px;
 }
 
 .popup_title {

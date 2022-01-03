@@ -504,7 +504,7 @@ const cancelRecordSave = document.querySelector('.lose_popup_message .cancel_but
 const confirmRecordSave = document.querySelector('.lose_popup_message .save_button')
 let nicknamePopup = document.querySelector('.nickname_input_wrapper')
 let virtualKeyBoard = document.querySelector('.virtual_keyboard')
-const enterToRecord = document.querySelector('.nickname_input_wrapper .enter')
+const enterToRecord = document.querySelectorAll('.nickname_input_wrapper .enter, .virtual_keyboard .enter_button')
 
 nicknamePopup.addEventListener('mousedown', () => {
 	console.log('start');
@@ -582,45 +582,48 @@ cancelRecordSave.addEventListener('click', () => {
 
 let buttonLock = false
 
-enterToRecord.addEventListener('click', () => {
-	if(buttonLock === false){
-		buttonLock = true
-		setTimeout(() => {
-			nicknamePopup.classList.remove('floatup_popup')
-			virtualKeyBoard.classList.remove('floatup_popup')
-			const nickname = nicknamePopup.querySelector('input').value
-			
-			const checkStorageRating = localStorage.getItem(`${nickname}`)
-
-			if(checkStorageRating){
-				if(Number(score) > Number(checkStorageRating)){
+enterToRecord.forEach(e => 
+	e.addEventListener('click', () => {
+		console.log('sd');
+		if(buttonLock === false){
+			buttonLock = true
+			setTimeout(() => {
+				nicknamePopup.classList.remove('floatup_popup')
+				virtualKeyBoard.classList.remove('floatup_popup')
+				const nickname = nicknamePopup.querySelector('input').value
+				
+				const checkStorageRating = localStorage.getItem(`${nickname}`)
+	
+				if(checkStorageRating){
+					if(Number(score) > Number(checkStorageRating)){
+						localStorage.setItem(`${nickname}`, `${score}`)
+						updateLocalStorage()
+						buildRatingList(sortLocalStorage)
+					}
+	
+				} else {
 					localStorage.setItem(`${nickname}`, `${score}`)
 					updateLocalStorage()
 					buildRatingList(sortLocalStorage)
 				}
-
-			} else {
-				localStorage.setItem(`${nickname}`, `${score}`)
-				updateLocalStorage()
-				buildRatingList(sortLocalStorage)
-			}
+		
+				setTimeout(() => {
+					nicknamePopup.querySelector('input').value = ''
+		
+					window.addEventListener('touchstart', touchStart)
+					window.addEventListener('touchend', touchEnd)
+					document.addEventListener('mousedown', clickStart)
+					document.addEventListener('mouseup', clickEnd)
+					document.addEventListener('touchstart', windowScroll)
+				}, 150)
+	
+			}, 150)
 	
 			setTimeout(() => {
-				nicknamePopup.querySelector('input').value = ''
-	
-				window.addEventListener('touchstart', touchStart)
-				window.addEventListener('touchend', touchEnd)
-				document.addEventListener('mousedown', clickStart)
-				document.addEventListener('mouseup', clickEnd)
-				document.addEventListener('touchstart', windowScroll)
-			}, 150)
-
-		}, 150)
-
-		setTimeout(() => {
-			buttonLock = false
-		}, 500)
-	}
-})
+				buttonLock = false
+			}, 500)
+		}
+	})
+)
 
 })
