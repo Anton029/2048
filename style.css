@@ -94,6 +94,15 @@ h1 {
 	border: none;
 	background-color: transparent;
 	font-size: 22px;
+	transition: 0.3s all;
+}
+
+.red_placeholder {
+
+}
+
+.red_placeholder::-webkit-input-placeholder {
+	color: red;
 }
 
 .enter {

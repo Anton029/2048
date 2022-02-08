@@ -585,7 +585,9 @@ let buttonLock = false
 
 enterToRecord.forEach(e => 
 	e.addEventListener('click', () => {
-		if(buttonLock === false){
+		if(buttonLock === false 
+			&& nicknamePopup.querySelector('input').value !== ''
+			&&nicknamePopup.querySelector('input').value !== ' '){
 			buttonLock = true
 			setTimeout(() => {
 				nicknamePopup.classList.remove('floatup_popup')
@@ -624,6 +626,14 @@ enterToRecord.forEach(e =>
 			}, 500)
 
 			nicknameInput.blur()
+		}
+		else {
+			console.log('error')
+			// nicknamePopup.querySelector('input').style.cssText = `color: red`
+			nicknamePopup.querySelector('input').classList.add('red_placeholder')
+			setTimeout(() => {
+				nicknamePopup.querySelector('input').classList.remove('red_placeholder')
+			}, 1500)
 		}
 	})
 )
